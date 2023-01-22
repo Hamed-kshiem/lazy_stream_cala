@@ -66,12 +66,33 @@ def isPrime(n: Int): Boolean =
 
 object Main {
   def main(args: Array[String]): Unit = {
-    val primes = LStream.numsFrom(2).filter(isPrime)
+/*    val primes = LStream.numsFrom(2).filter(isPrime)
     println(primes.take(10).toList)
     println(primes.find(_ > 1000))
     println(primes.find(_ > 10000))
-    println(primes.map(_ * 2).take(10).toList)
-
-
+    println(primes.map(_ * 2).take(10).toList)*/
+val primes = LStream.numsFrom(2).filter(isPrime)
+    println(primes.take(5).toList) // [2, 3, 5, 7, 11]
+    val primeSquares = primes.map(x => x * x)
+    println(primeSquares.take(5).toList) // [4, 9, 25, 49, 121]
+    val primeSquareRoots = primeSquares.map(math.sqrt(_)).take(5)
+    println(primeSquareRoots.toList) // [2.0, 3.0, 5.0, 7.0, 11.0]
+    primeSquareRoots.foreach(println) // prints 2.0, 3.0, 5.0, 7.0, 11.0
+    val firstPrimeGreaterThan100 = primes.find(x => x > 100)
+    println(firstPrimeGreaterThan100) // Some(101)
+    //____________________________________________________
+    println("_____________________example 2 test_______________________________")
+    //____________________________________________________
+    // Fibonacci numbers stream
+    val fibonacci = LStream.iterate((0, 1), x => (x._2, x._1 + x._2))
+    val fibonacciNumbers = fibonacci.map(_._1)
+    //first 10 elements of the fibonacci stream and convert it to a List
+    println(fibonacciNumbers.take(10).toList) // [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+    val evenFibonacci = fibonacciNumbers.filter(_ % 2 == 0)
+    println(evenFibonacci.take(5).toList) // [0, 2, 8, 34, 144]
+    val fibonacciSum = evenFibonacci.take(10).toList.sum
+    println(fibonacciSum) // 188
+    println(fibonacciSum) // 4613732
   }
+
 }
